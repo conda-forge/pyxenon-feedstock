@@ -14,12 +14,13 @@ source:
 
 build:
   script: {{ PYTHON }} -m pip install . -vv
-  number: 1
+  number: 2
 
 requirements:
   host:
     - pip
     - python
+    - setuptools
   run:
     - grpcio
     - grpcio-tools
