@@ -9,7 +9,7 @@ package:
   version: ${{ version }}
 
 source:
-  url: https://pypi.io/packages/source/${{ name[0] }}/${{ name }}/pyxenon-${{ version }}.tar.gz
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/pyxenon-${{ version }}.tar.gz
   sha256: 6840771716974da68d69e5cc24e017698f8f9bcebcfaf3cb5da41555d5ec772b
   patches:
     - if: unix
@@ -19,11 +19,12 @@ source:
 
 build:
   number: 2
-  script: ${{ PYTHON }} -m pip install . -vv
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
     - pip
+    - setuptools
     - python
   run:
     - grpcio
