@@ -1,0 +1,50 @@
+schema_version: 1
+
+context:
+  name: pyxenon
+  version: "3.0.3"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/pyxenon-${{ version }}.tar.gz
+  sha256: 6840771716974da68d69e5cc24e017698f8f9bcebcfaf3cb5da41555d5ec772b
+  patches:
+    - if: unix
+      then: setupunix.patch
+    - if: win
+      then: setupwin.patch
+
+build:
+  number: 2
+  script: PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - pip
+    - setuptools
+    - python
+  run:
+    - grpcio
+    - grpcio-tools
+    - pyopenssl
+    - python
+    - pyxdg
+
+tests:
+  - python:
+      imports:
+        - xenon
+      pip_check: true
+
+about:
+  summary: Python wrapper for the Xenon API.
+  license: Apache-2.0
+  license_file: LICENSE
+  homepage: https://github.com/NLeSC/pyxenon
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
